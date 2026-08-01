@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Production · AgriLink{% endblock %}
+{% block content %}
+<section class="page-header">
+  <h2>{{ action }} Production Record</h2>
+</section>
+
+<section class="card">
+  <form method="post">
+    <div class="form-grid">
+      <div>
+        <label for="farmer_id">Farmer</label>
+        <select id="farmer_id" name="farmer_id" required>
+          <option value="">Select farmer</option>
+          {% for farmer in farmers %}
+          <option value="{{ farmer.farmer_id }}" {% if record and record.farmer_id == farmer.farmer_id %}selected{% endif %}>
+            {{ farmer.farm_name }} — {{ farmer.first_name }} {{ farmer.last_name }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label for="crop_id">Crop</label>
+        <select id="crop_id" name="crop_id" required>
+          <option value="">Select crop</option>
+          {% for crop in crops %}
+          <option value="{{ crop.crop_id }}" {% if record and record.crop_id == crop.crop_id %}selected{% endif %}>{{ crop.crop_name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label for="season_id">Season</label>
+        <select id="season_id" name="season_id" required>
+          <option value="">Select season</option>
+          {% for season in seasons %}
+          <option value="{{ season.season_id }}" {% if record and record.season_id == season.season_id %}selected{% endif %}>
+            {{ season.season_name }} ({{ season.year }})
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label for="planting_date">Planting Date</label>
+        <input type="date" id="planting_date" name="planting_date" required value="{{ record.planting_date if record else '' }}">
+      </div>
+      <div>
+        <label for="harvest_date">Harvest Date</label>
+        <input type="date" id="harvest_date" name="harvest_date" value="{{ record.harvest_date if record and record.harvest_date else '' }}">
+      </div>
+      <div>
+        <label for="area_hectares">Area (hectares)</label>
+        <input type="number" step="0.01" min="0.01" id="area_hectares" name="area_hectares" required value="{{ record.area_hectares if record else '' }}">
+      </div>
+      <div>
+        <label for="yield_kg">Yield (kg)</label>
+        <input type="number" step="0.01" min="0" id="yield_kg" name="yield_kg" value="{{ record.yield_kg if record else '0' }}">
+      </div>
+      <div>
+        <label for="status">Status</label>
+        <select id="status" name="status" required>
+          {% for status in ['Planted', 'Growing', 'Harvested'] %}
+          <option value="{{ status }}" {% if record and record.status == status %}selected{% endif %}>{{ status }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="full-width">
+        <label for="notes">Notes</label>
+        <textarea id="notes" name="notes" rows="3">{{ record.notes if record and record.notes else '' }}</textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn">{{ action }} Record</button>
+      <a href="{{ url_for('production.list_production') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

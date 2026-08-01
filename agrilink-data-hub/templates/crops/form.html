@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}{{ action }} Crop · AgriLink{% endblock %}
+{% block content %}
+<section class="page-header">
+  <h2>{{ action }} Crop</h2>
+</section>
+
+<section class="card">
+  <form method="post">
+    <div class="form-grid">
+      <div>
+        <label for="crop_name">Crop Name</label>
+        <input type="text" id="crop_name" name="crop_name" required value="{{ crop.crop_name if crop else '' }}">
+      </div>
+      <div>
+        <label for="category">Category</label>
+        <select id="category" name="category" required>
+          {% for cat in ['Grain', 'Vegetable', 'Fruit', 'Legume', 'Root', 'Other'] %}
+          <option value="{{ cat }}" {% if crop and crop.category == cat %}selected{% endif %}>{{ cat }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="full-width">
+        <label for="description">Description</label>
+        <textarea id="description" name="description" rows="3">{{ crop.description if crop and crop.description else '' }}</textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn">{{ action }} Crop</button>
+      <a href="{{ url_for('crops.list_crops') }}" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

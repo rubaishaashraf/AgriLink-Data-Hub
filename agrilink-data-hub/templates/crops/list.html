@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Crops · AgriLink{% endblock %}
+{% block content %}
+<section class="page-header">
+  <h2>Crops</h2>
+  <p>Manage crop types and categories.</p>
+</section>
+
+<section class="card">
+  <div class="card-header">
+    <h3>All Crops</h3>
+    <a href="{{ url_for('crops.add_crop') }}" class="btn btn-sm">Add Crop</a>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Times Planted</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for crop in crops %}
+      <tr>
+        <td>{{ crop.crop_name }}</td>
+        <td><span class="badge">{{ crop.category }}</span></td>
+        <td>{{ crop.description or '—' }}</td>
+        <td>{{ crop.times_planted }}</td>
+        <td class="actions">
+          <a href="{{ url_for('crops.edit_crop', crop_id=crop.crop_id) }}" class="btn btn-sm btn-secondary">Edit</a>
+          <form method="post" action="{{ url_for('crops.delete_crop', crop_id=crop.crop_id) }}" onsubmit="return confirm('Delete this crop?');">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="5" class="empty">No crops yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

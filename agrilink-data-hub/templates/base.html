@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}AgriLink Data Hub{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <span class="brand-icon">🌾</span>
+      <div>
+        <h1>AgriLink</h1>
+        <p>Data Hub · SDG 2</p>
+      </div>
+    </div>
+    <nav>
+      <a href="{{ url_for('index') }}">Dashboard</a>
+      <a href="{{ url_for('farmers.list_farmers') }}">Farmers</a>
+      <a href="{{ url_for('crops.list_crops') }}">Crops</a>
+      <a href="{{ url_for('production.list_production') }}">Production</a>
+      <a href="{{ url_for('fertilizers.list_fertilizers') }}">Fertilizers</a>
+      <a href="{{ url_for('fertilizers.inventory') }}">Inventory</a>
+      <a href="{{ url_for('fertilizers.apply_fertilizer') }}">Applications</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+</body>
+</html>

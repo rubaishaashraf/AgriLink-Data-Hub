@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Fertilizers · AgriLink{% endblock %}
+{% block content %}
+<section class="page-header">
+  <h2>Fertilizers</h2>
+  <p>Manage fertilizer types and stock levels.</p>
+</section>
+
+<section class="card">
+  <div class="card-header">
+    <h3>All Fertilizers</h3>
+    <a href="{{ url_for('fertilizers.add_fertilizer') }}" class="btn btn-sm">Add Fertilizer</a>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Unit</th>
+        <th>NPK</th>
+        <th>Stock</th>
+        <th>Reorder Level</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <td>{{ item.fertilizer_name }}</td>
+        <td>{{ item.fertilizer_type }}</td>
+        <td>{{ item.unit }}</td>
+        <td>{{ item.npk_ratio or '—' }}</td>
+        <td>{{ item.quantity if item.quantity is not none else '—' }}</td>
+        <td>{{ item.reorder_level if item.reorder_level is not none else '—' }}</td>
+        <td>
+          {% if item.is_low_stock %}
+          <span class="badge badge-warning">Low Stock</span>
+          {% else %}
+          <span class="badge">OK</span>
+          {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="empty">No fertilizers yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

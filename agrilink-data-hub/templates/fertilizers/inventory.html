@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Inventory · AgriLink{% endblock %}
+{% block content %}
+<section class="page-header">
+  <h2>Fertilizer Inventory</h2>
+  <p>Update stock quantities and reorder levels.</p>
+</section>
+
+<section class="card">
+  <div class="card-header">
+    <h3>Inventory Levels</h3>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Fertilizer</th>
+        <th>Unit</th>
+        <th>Quantity</th>
+        <th>Reorder Level</th>
+        <th>Last Updated</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in inventory_rows %}
+      <tr>
+        <form method="post">
+          <td>{{ row.fertilizer_name }}</td>
+          <td>{{ row.unit }}</td>
+          <td>
+            <input type="hidden" name="fertilizer_id" value="{{ row.fertilizer_id }}">
+            <input type="number" step="0.01" min="0" name="quantity" value="{{ row.quantity }}" required>
+          </td>
+          <td>
+            <input type="number" step="0.01" min="0" name="reorder_level" value="{{ row.reorder_level }}" required>
+          </td>
+          <td>{{ row.last_updated }}</td>
+          <td><button type="submit" class="btn btn-sm">Save</button></td>
+        </form>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="empty">No inventory records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

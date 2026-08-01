@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Farmers · AgriLink{% endblock %}
+{% block content %}
+<section class="page-header">
+  <h2>Farmers</h2>
+  <p>Manage farmer profiles and farm locations.</p>
+</section>
+
+<section class="card">
+  <div class="card-header">
+    <h3>All Farmers</h3>
+    <a href="{{ url_for('farmers.add_farmer') }}" class="btn btn-sm">Add Farmer</a>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Farm</th>
+        <th>Location</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Records</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for farmer in farmers %}
+      <tr>
+        <td>{{ farmer.first_name }} {{ farmer.last_name }}</td>
+        <td>{{ farmer.farm_name }}</td>
+        <td>{{ farmer.location }}</td>
+        <td>{{ farmer.email or '—' }}</td>
+        <td>{{ farmer.phone or '—' }}</td>
+        <td>{{ farmer.production_count }}</td>
+        <td class="actions">
+          <a href="{{ url_for('farmers.edit_farmer', farmer_id=farmer.farmer_id) }}" class="btn btn-sm btn-secondary">Edit</a>
+          <form method="post" action="{{ url_for('farmers.delete_farmer', farmer_id=farmer.farmer_id) }}" onsubmit="return confirm('Delete this farmer?');">
+            <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </td>
+      </tr>
+      {% else %}
+      <tr><td colspan="7" class="empty">No farmers yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

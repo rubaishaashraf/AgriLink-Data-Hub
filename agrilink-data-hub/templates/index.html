@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · AgriLink{% endblock %}
+{% block content %}
+<section class="page-header">
+  <h2>Dashboard</h2>
+  <p>Track farmers, crops, seasonal production, and fertilizer inventory.</p>
+</section>
+
+<div class="stats-grid">
+  <div class="stat-card"><span>Farmers</span><strong>{{ stats.farmer_count }}</strong></div>
+  <div class="stat-card"><span>Crop Types</span><strong>{{ stats.crop_count }}</strong></div>
+  <div class="stat-card"><span>Production Records</span><strong>{{ stats.production_count }}</strong></div>
+  <div class="stat-card warning"><span>Low Stock Items</span><strong>{{ stats.low_stock_count }}</strong></div>
+</div>
+
+<section class="card">
+  <div class="card-header">
+    <h3>Recent Production</h3>
+    <a href="{{ url_for('production.add_production') }}" class="btn btn-sm">Add Record</a>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>Farm</th>
+        <th>Crop</th>
+        <th>Season</th>
+        <th>Planted</th>
+        <th>Status</th>
+        <th>Yield (kg)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in recent %}
+      <tr>
+        <td>{{ row.farm_name }}</td>
+        <td>{{ row.crop_name }}</td>
+        <td>{{ row.season_name }}</td>
+        <td>{{ row.planting_date }}</td>
+        <td><span class="badge">{{ row.status }}</span></td>
+        <td>{{ row.yield_kg }}</td>
+      </tr>
+      {% else %}
+      <tr><td colspan="6" class="empty">No records yet.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}

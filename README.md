@@ -1,4 +1,4 @@
-# 🌱 AgriLink Data Hub
+# 🌱 AgriPulse - Sustainable Farming Through Smart Insights
 
 ## 📌 Description
 AgriLink Data Hub is a Flask-based web application that manages data of farmers, crops, fertilizers, and production in one system.

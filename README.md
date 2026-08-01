@@ -1,7 +1,7 @@
-# 🌱 AgriPulse - Sustainable Farming, Powered By Smart Insights
+# 🌱 AgriFlow - A centralized system for managing agricultural data and generating intelligent insights.
 
 ## 📌 Description
-AgriLink Data Hub is a Flask-based web application that manages data of farmers, crops, fertilizers, and production in one system.
+AgriFlow is a Flask-based web application that manages data of farmers, crops, fertilizers, and production in one system.
 
 ---
 
